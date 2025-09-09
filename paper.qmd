@@ -16,7 +16,7 @@ engine: knitr
 
 <!-- TODO: add content -->
 
-This paper investigates the causal impact of the initial stage of the COVID-19 pandemic (i.e., 2020) on airlines’ crisis response strategies from the supply perspective in the EU-US market. An analytical framework examining three strategies, namely market exit, capacity retrenchment, and route hierarchy persevering, is established by utilizing the difference-in-differences (DID) method, which jointly considers dynamics in pandemic severity, border control policies, and route structure. The results demonstrate that the COVID-19 pandemic led to the disappearance of diversity in the business models of the EU-US market in the short term. Analysis of individual airlines’ capacity retrenchment strategies reveals heterogeneity in the impact of COVID-19. The route hierarchy persevering analysis exhibits three distinct strategies of airlines, i.e., connectivity-oriented, antitrust immunity joint venture-oriented, and market presence-oriented. 
+This paper investigates the causal impact of the initial stage of the COVID-19 pandemic (i.e., 2020) on airlines’ crisis response strategies from the supply perspective in the EU-US market. An analytical framework examining three strategies, namely market exit, capacity retrenchment, and route hierarchy persevering, is established by utilizing the difference-in-differences (DID) method, which jointly considers dynamics in pandemic severity, border control policies, and route structure. The results demonstrate that the COVID-19 pandemic led to the disappearance of diversity in the business models of the EU-US market in the short term. Analysis of individual airlines’ capacity retrenchment strategies reveals heterogeneity in the impact of COVID-19. The route hierarchy persevering analysis exhibits three distinct strategies of airlines, i.e., connectivity-oriented, antitrust immunity joint venture-oriented, and market presence-oriented.
 
 # Methods {#sec-methods}
 
@@ -73,10 +73,80 @@ A mindmap of all the dependent and independent variables is shown in @fig-mindma
 
 # Results {#sec-results}
 
+We conduct a Hausman test and the results confirm the existence of the fixed-effects. The estimation results of model (1) and (2) are presented in Table 5 and Table 6, respectively. The first column in each table displays the estimations for the aggregated EU-US market. The remaining columns that present the results for the 16 survival carriers show the heterogeneous impact of the pandemic and other factors. For ease of presentation, results for country-pair, carrier and time fixed effects are not reported but can be requested from authors. For the results, we first focus on the aggregated market by explaining how COVID-19 variables, control policy variables and other demand and cost variables influence capacity. Overall, the estimation results of the two models correspond to each other for both the aggregated market and individual carriers. Exceptions are the control measure stringency variables. For individual carriers, we therefore just focus on elaborating the heterogeneity of the retrenchment and persevering strategy across carriers through the treatment period variable and route hierarchy variables. Besides being driven by the need to maintain network connectivity, carriers may also operate “ghost flights” to retain their slots at coordinated airports, which in turn affects their capacity. To examine this, we conduct a statistical analysis of the proportion of routes connected to coordinated airports (identified as Level 3 airports by IATA) for different airlines (See @tbl-frequency).
 
+| Carrier Code | 2019    | 2020    | 2020 vs 2019 |
+|--------------|---------|---------|--------------|
+| AA           | 95.08%  | 100.00% | 5.18%        |
+| AF           | 100.00% | 100.00% | 0.00%        |
+| AZ           | 100.00% | 100.00% | 0.00%        |
+| BA           | 100.00% | 100.00% | 0.00%        |
+| DL           | 99.56%  | 100.00% | 0.44%        |
+| EI           | 95.12%  | 96.23%  | 1.17%        |
+| FI           | 100.00% | 100.00% | 0.00%        |
+| IB           | 100.00% | 100.00% | 0.00%        |
+| KL           | 100.00% | 100.00% | 0.00%        |
+| LH           | 100.00% | 100.00% | 0.00%        |
+| LO           | 89.27%  | 98.12%  | 9.91%        |
+| LX           | 100.00% | 100.00% | 0.00%        |
+| OS           | 100.00% | 100.00% | 0.00%        |
+| SK           | 100.00% | 100.00% | 0.00%        |
+| TP           | 100.00% | 96.12%  | -3.88%       |
+| UA           | 94.81%  | 98.67%  | 4.07%        |
 
-# Conclusions {#sec-discussion}
+: The Proportion of Frequency of Routes\* Connecting Coordinated Airports {#tbl-frequency}
 
+We can then draw a histogram of the sampled airlines (See @fig-table1-bars). The code is listed below.
 
+```{r}
+#| label: fig-table1-bars
+#| fig-cap: "Carrier proportions of frequency of routes connecting coordinated airports (2019 vs 2020)"
+#| echo: true
+#| message: false
+#| warning: false
 
-# References
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+
+# Table 1 数据（按你给出的顺序）
+df <- tibble::tribble(
+ ~Carrier, ~`2019`, ~`2020`, ~`Change`,
+ "AA", 95.08, 100.00,  5.18,
+ "AF",100.00, 100.00,  0.00,
+ "AZ",100.00, 100.00,  0.00,
+ "BA",100.00, 100.00,  0.00,
+ "DL", 99.56, 100.00,  0.44,
+ "EI", 95.12,  96.23,  1.17,
+ "FI",100.00, 100.00,  0.00,
+ "IB",100.00, 100.00,  0.00,
+ "KL",100.00, 100.00,  0.00,
+ "LH",100.00, 100.00,  0.00,
+ "LO", 89.27,  98.12,  9.91,
+ "LX",100.00, 100.00,  0.00,
+ "OS",100.00, 100.00,  0.00,
+ "SK",100.00, 100.00,  0.00,
+ "TP",100.00,  96.12, -3.88,
+ "UA", 94.81,  98.67,  4.07
+)
+
+# 保留表中顺序
+df$Carrier <- factor(df$Carrier, levels = df$Carrier)
+
+# 转成长表，便于分组作图
+long <- df %>%
+  pivot_longer(cols = c(`2019`, `2020`), names_to = "Year", values_to = "Percent")
+
+# 分组柱状图
+ggplot(long, aes(x = Carrier, y = Percent, fill = Year)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.7) +
+  scale_y_continuous(
+    limits = c(0, 100),
+    labels = label_number(suffix = "%", accuracy = 0.01)
+  ) +
+  labs(x = "Carrier Code", y = "Proportion of frequency (%)") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "top")
+```
+
