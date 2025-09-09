@@ -1,0 +1,82 @@
+---
+title: "Modelling Heterogeneous Capacity Response Strategies of Airlines in the Initial Stage of the COVID-19 Pandemic in the EU-US Market"
+author: 
+  - name: "Liwen Wang"
+    affiliation: "Department of Geography, Ghent University"
+format:
+  html:
+    css: styles.css
+    toc: true
+    number-sections: true
+editor: visual
+engine: knitr
+---
+
+# Introduction {#sec-intro}
+
+<!-- TODO: add content -->
+
+This paper investigates the causal impact of the initial stage of the COVID-19 pandemic (i.e., 2020) on airlines’ crisis response strategies from the supply perspective in the EU-US market. An analytical framework examining three strategies, namely market exit, capacity retrenchment, and route hierarchy persevering, is established by utilizing the difference-in-differences (DID) method, which jointly considers dynamics in pandemic severity, border control policies, and route structure. The results demonstrate that the COVID-19 pandemic led to the disappearance of diversity in the business models of the EU-US market in the short term. Analysis of individual airlines’ capacity retrenchment strategies reveals heterogeneity in the impact of COVID-19. The route hierarchy persevering analysis exhibits three distinct strategies of airlines, i.e., connectivity-oriented, antitrust immunity joint venture-oriented, and market presence-oriented. 
+
+# Methods {#sec-methods}
+
+We apply a DID method to capture the causal effect of COVID-19 on the EU-US capacity at the route level. Given the fact that finding routes unaffected in 2020 is not feasible due to the wide geographic coverage of COVID-19, we chose the year 2019 as the control group and the year 2020 as the treatment group. The World Health Organization (WHO) declared COVID-19 a pandemic on March 11, 2020. Therefore, the period after the 11th week of 2020 is defined as the post-treatment phase. In this way, the period of 2019-2020 is divided into four subgroups (See @fig-didsetup), i.e., control group 1 (The 1st week to the 11th week of 2019), control group 2 (The 12th week to the 52nd week of 2019), treatment group 1 (The 1st week to the 11th week of 2020), and treatment group 2 (The 12th week to the 52nd week of 2020).
+
+As an econometric technique within the framework of the quasi-natural experiment, the causality identified by DID is interpreted by comparing the difference between the changes in a treatment group and changes in a control group after the pandemic. In our model, instead of simply comparing the changes between 2020 and 2019, we first consider the average changes in a situation with (i.e., treatment group2) and without (treatment group1) the pandemic in 2020 and then reflect the same calculation in the previous year 2019 (i.e., control group2 versus control group1). The net effect of COVID-19 is finally realized by measuring the difference between the average changes in 2020 and 2019, respectively, i.e., the so-called average treatment effect (ATT). To put it more straightforwardly, ATT is calculated as *(treatment group 2 - treatment group1) - (control group 2- control group 1)*.
+
+![A demonstration of the DID setup](images/clipboard-575496743.png){#fig-didsetup}
+
+In addition to applying the treatment period to identify the impact of COVID-19 (Equation 1), a separate model is established to use the cumulative confirmed cases to represent the severity of the pandemic (Equation 2). Other factors, such as stringency level of control measures, route hierarchy persevering, demand and supply-related variables, are also incorporated into the models. The detailed specification of the DID model is presented as follows: $$
+\begin{aligned}
+\text{Frequency}_{a,r,w,y} 
+&= \gamma_{0} 
++ \gamma_{1}\, (\text{Treatment}_{q,r,y} \times \text{Period}_{a,r,w}) \\
+&\quad + \gamma_{2}\, \text{ControlEuro1}_{c,w,y} 
++ \gamma_{3}\, \text{ControlEuro2}_{c,w,y} 
++ \gamma_{4}\, \text{ControlEuro3}_{c,w,y} \\
+&\quad + \gamma_{5}\, \text{ControlEuro4}_{c,w,y} 
++ \gamma_{6}\, \text{ControlUS2}_{c,w,y} 
++ \gamma_{7}\, \text{ControlUS3}_{c,w,y} \\
+&\quad + \gamma_{8}\, \text{PP}_{r} 
++ \gamma_{9}\, \text{PS}_{r} 
++ \gamma_{10}\, \text{SS}_{r} \\
+&\quad + \gamma_{11}\, \text{Business}_{r,w,y} 
++ \gamma_{12}\, \ln(\text{HHI}_{r,w,y}) 
++ \gamma_{13}\, \ln(\text{GCD}_{r}) \\
+&\quad + \delta_{w} + \delta_{c} + \delta_{a} + \varepsilon_{a,r,w,y}
+\end{aligned}
+$$\
+$$
+\begin{aligned}
+\text{Frequency}_{a,r,w,y} 
+&= \beta_{0} 
++ \beta_{1}\, (\text{Treatment}_{a,r,y} \times \text{Period}_{a,r,w} \times \text{Cases}_{c,w,y}) \\
+&\quad + \beta_{2}\, \text{ControlEuro1}_{c,w,y} 
++ \beta_{3}\, \text{ControlEuro2}_{c,w,y} 
++ \beta_{4}\, \text{ControlEuro3}_{c,w,y} \\
+&\quad + \beta_{5}\, \text{ControlEuro4}_{c,w,y} 
++ \beta_{6}\, \text{ControlUS2}_{c,w,y} 
++ \beta_{7}\, \text{ControlUS3}_{c,w,y} \\
+&\quad + \beta_{8}\, \text{PP}_{r} 
++ \beta_{9}\, \text{PS}_{r} 
++ \beta_{10}\, \text{SS}_{r} \\
+&\quad + \beta_{11}\, \text{Business}_{r,w,y} 
++ \beta_{12}\, \ln(\text{HHI}_{r,w,y}) 
++ \beta_{13}\, \ln(\text{GCD}_{r}) \\
+&\quad + \delta_{w} + \delta_{c} + \delta_{a} + \varepsilon_{a,r,w,y}
+\end{aligned}
+$$
+
+A mindmap of all the dependent and independent variables is shown in @fig-mindmap.
+
+![Mind Map of the Model (source: [Excalidraw link](https://excalidraw.com/#json=GV-mpxtXJ49RE_2L4dh_L,XnsEPIwl5MymwmqkBuEQJg))](images/clipboard-4116348667.png){#fig-mindmap}
+
+# Results {#sec-results}
+
+
+
+# Conclusions {#sec-discussion}
+
+
+
+# References
